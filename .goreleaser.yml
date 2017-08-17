@@ -13,6 +13,33 @@ builds:
   main: ./gh-fetch
   ldflags: -s -w -X main.version={{.Version}} -X main.commit={{.Commit}} -X main.date={{.Date}}
   binary: gh-fetch
+- goos:
+  - linux
+  goarch:
+  - amd64
+  goarm:
+  - "6"
+  main: ./hello
+  ldflags: -s -w -X main.version={{.Version}} -X main.commit={{.Commit}} -X main.date={{.Date}}
+  binary: hello
+fpm:
+  vendor: giftbox
+  homepage: https://giftbox.com
+  maintainer: Matthew Mueller <mattmuelle@mgail.com>
+  description: Giftbox release
+  formats:
+    - rpm
+  # We need ps (procps) & su (util-linux) for init.d
+  # Note: only needed inside the amazonlinux docker container
+  dependencies:
+    - procps
+    - util-linux
+  files:
+    ./vendor/monit/bin/monit: /usr/local/bin/monit
+    ./vendor/monit/man/man1/monit.1: /usr/share/man/man1/monit.1
+    ./monit/monitrc: /usr/local/etc/monitrc
+
+
 # archive:
 #   format: tar.gz
 #   name_template: '{{ .Binary }}_{{.Version}}_{{ .Os }}_{{ .Arch }}{{ if .Arm }}v{{
