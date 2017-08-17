@@ -4,7 +4,7 @@ gh-fetch:
 	go run gh-fetch/gh-fetch.go
 
 release:
-	goreleaser
+	goreleaser --rm-dist
 
 download.monit:
 	mkdir -p ./vendor/monit
