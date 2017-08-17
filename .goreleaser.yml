@@ -1,0 +1,30 @@
+project_name: giftbox
+release:
+  github:
+    owner: matthewmueller
+    name: giftbox
+builds:
+- goos:
+  - linux
+  goarch:
+  - amd64
+  goarm:
+  - "6"
+  main: ./gh-fetch
+  ldflags: -s -w -X main.version={{.Version}} -X main.commit={{.Commit}} -X main.date={{.Date}}
+  binary: gh-fetch
+# archive:
+#   format: tar.gz
+#   name_template: '{{ .Binary }}_{{.Version}}_{{ .Os }}_{{ .Arch }}{{ if .Arm }}v{{
+#     .Arm }}{{ end }}'
+#   files:
+#   - licence*
+#   - LICENCE*
+#   - license*
+#   - LICENSE*
+#   - readme*
+#   - README*
+#   - changelog*
+#   - CHANGELOG*
+# snapshot:
+#   name_template: SNAPSHOT-{{ .Commit }}
