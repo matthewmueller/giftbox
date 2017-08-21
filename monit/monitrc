@@ -1,0 +1,38 @@
+#
+## Start Monit in the background (run as a daemon):
+## check services at 30 seconds intervals
+#
+set daemon 30
+
+#
+## Set syslog logging. If you want to log to a standalone log file instead,
+## specify the full path to the log file
+#
+set log /var/log/monit.log
+
+#
+## Set the location of the Monit lock file which stores the process id of the
+## running Monit instance. By default this file is stored in $HOME/.monit.pid
+#
+set pidfile /var/run/monit.pid
+
+#
+## It is possible to include additional configuration parts from other files or
+## directories.
+#
+include /usr/local/etc/monit.d/*
+
+#
+## Monit has an embedded HTTP interface which can be used to view status of
+## services monitored and manage services from a web interface. The HTTP
+## interface is also required if you want to issue Monit commands from the
+## command line, such as 'monit status' or 'monit restart service' The reason
+## for this is that the Monit client uses the HTTP interface to send these
+## commands to a running Monit daemon. See the Monit Wiki if you want to
+## enable SSL for the HTTP interface.
+#
+set httpd port 2812 and
+    use address localhost  # only accept connection from localhost
+    allow localhost        # allow localhost to connect to the server and
+    allow admin:monit      # require user 'admin' with password 'monit'
+

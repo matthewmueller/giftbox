@@ -1,10 +1,13 @@
 MONIT_VERSION := 5.23.0
 
-gh-fetch:
-	go run gh-fetch/gh-fetch.go
+giftbox:
+	go run giftbox/giftbox.go fetch
+.PHONY: giftbox
 
 release:
 	goreleaser --rm-dist
+
+
 
 download.monit:
 	mkdir -p ./vendor/monit
