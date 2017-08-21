@@ -7,7 +7,9 @@ stderr() {
 }
 
 main() {
-		declare name="${1}", version="${2}"
+		local name="${1}"
+    local version="${2}"
+
     stderr "NAME: ${name}"
     stderr "VERSION: ${version}"
 }

@@ -30,6 +30,7 @@ release:
 		--depends "procps" \
 		--depends "util-linux" \
     --depends "initscripts" \
+		--depends "$(GHBASE)/monit.rpm" \
 		--force \
 			"$(DIR)/init.sh"="/etc/init.d/giftbox"
 	@test ! -e "./rpm/$(NAME).rpm" || (cp ./rpm/$(NAME).rpm ./rpm/$(NAME).prev.rpm)
