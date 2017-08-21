@@ -1,8 +1,9 @@
 DIR := $(dir $(realpath $(lastword $(MAKEFILE_LIST))))
 VERSION ?= $(shell date -u +%Y-%m-%d-%H-%M)
+CURRENT_TAG := release-$(VERSION)
 NAME := $(shell basename $(DIR))
 
-GHBASE := https://github.com/matthewmueller/giftbox/raw/$(VERSION)/rpm
+GHBASE := https://github.com/matthewmueller/giftbox/raw/$(CURRENT_TAG)/rpm
 
 INFOLOG := \033[34m ▸\033[0m
 WARNLOG := \033[33m ▸\033[0m

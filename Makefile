@@ -39,8 +39,8 @@ test:
 	@docker run -v $(DIR)/rpm:/rpm -it --rm --name giftbox amazonlinux /bin/bash
 
 test-deploy:
-	@docker cp $(DIR)/rpm monit:/
-	@docker exec monit yum localinstall -y $(GHBASE)/giftbox.rpm
+	@docker cp $(DIR)/rpm giftbox:/
+	@docker exec giftbox yum localinstall -y $(GHBASE)/giftbox.rpm
 
 clean:
 	rm -rf $(DIR)/rpm/*
