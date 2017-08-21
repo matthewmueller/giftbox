@@ -7,11 +7,10 @@ stderr() {
 }
 
 main() {
-		local name="${1}"
+    # local name="${1}"
     local version="${2}"
 
-    stderr "NAME: ${name}"
-    stderr "VERSION: ${version}"
+    yum install -y "https://github.com/matthewmueller/giftbox/raw/${version}/rpm/monit.rpm"
 }
 
 main "<%= name %>" "<%= version %>"

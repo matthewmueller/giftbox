@@ -40,7 +40,7 @@ test:
 
 test-deploy:
 	@docker cp $(DIR)/rpm giftbox:/
-	@docker exec giftbox yum localinstall -y $(GHBASE)/giftbox.rpm
+	@docker exec giftbox yum localinstall --skip-broken -y $(GHBASE)/giftbox.rpm
 
 clean:
 	rm -rf $(DIR)/rpm/*
