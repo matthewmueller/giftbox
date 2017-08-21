@@ -4,6 +4,9 @@ VERSION := $(shell date -u +%Y-%m-%d-%H-%M)
 COMMIT := $(shell git log -1 --format="%h")
 APP := $(shell basename $(DIR))
 
+LATEST_TAG := $(shell git describe --abbrev=0 --tags)
+GHBASE := https://github.com/matthewmueller/giftbox/raw/$(LATEST_TAG)/rpm
+
 INFOLOG := \033[34m ▸\033[0m
 WARNLOG := \033[33m ▸\033[0m
 ERROLOG := \033[31m ⨯\033[0m
@@ -26,17 +29,18 @@ release:
 	@git add .
 	@git commit -a --allow-empty -m "Release $(VERSION)"
 	@git tag "release-$(VERSION)"
+	@echo "$(INFOLOG) pushing to github"
 	@git push origin master --tags
 
 update:
 	@$(MAKE) -C $(DIR)/monit update
 
 test:
-	@docker run -v $(DIR)/rpm:/rpm -it --rm --name monit amazonlinux /bin/bash
+	@docker run -v $(DIR)/rpm:/rpm -it --rm --name giftbox amazonlinux /bin/bash
 
 test-deploy:
 	@docker cp $(DIR)/rpm monit:/
-	@docker exec monit yum localinstall -y /rpm/monit.rpm
+	@docker exec monit yum localinstall -y $(GHBASE)/giftbox.rpm
 
 clean:
 	rm -rf $(DIR)/rpm/*
