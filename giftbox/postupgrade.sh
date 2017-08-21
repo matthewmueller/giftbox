@@ -10,7 +10,9 @@ main() {
     # local name="${1}"
     local version="${2}"
 
-    yum install -y "https://github.com/matthewmueller/giftbox/raw/${version}/rpm/monit.rpm"
+    stderr "upgrading ${version}..."
+    # curl 
+    # yum install -y "https://github.com/matthewmueller/giftbox/raw/${version}/rpm/monit.rpm"
 }
 
 main "<%= name %>" "<%= version %>"
