@@ -1,4 +1,5 @@
 DIR := $(dir $(realpath $(lastword $(MAKEFILE_LIST))))
+LATEST_TAG := $(shell git describe --abbrev=0 --tags)
 VERSION := $(shell date -u +%Y-%m-%d-%H-%M)
 COMMIT := $(shell git log -1 --format="%h")
 APP := $(shell basename $(DIR))
@@ -25,6 +26,7 @@ release:
 	@git add .
 	@git commit -a --allow-empty -m "Release $(VERSION)"
 	@git tag "release-$(VERSION)"
+	@git push origin master --tags
 
 update:
 	@$(MAKE) -C $(DIR)/monit update
@@ -32,7 +34,7 @@ update:
 test:
 	@docker run -v $(DIR)/rpm:/rpm -it --rm --name monit amazonlinux /bin/bash
 
-deploy:
+test-deploy:
 	@docker cp $(DIR)/rpm monit:/
 	@docker exec monit yum localinstall -y /rpm/monit.rpm
 

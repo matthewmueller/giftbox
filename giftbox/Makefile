@@ -1,6 +1,9 @@
 DIR := $(dir $(realpath $(lastword $(MAKEFILE_LIST))))
+LATEST_TAG := $(shell git describe --abbrev=0 --tags)
 VERSION ?= $(shell date -u +%Y-%m-%d-%H-%M)
 NAME := $(shell basename $(DIR))
+
+GHBASE := https://github.com/matthewmueller/giftbox/raw/$(LATEST_TAG)/rpm
 
 INFOLOG := \033[34m ▸\033[0m
 WARNLOG := \033[33m ▸\033[0m
@@ -27,6 +30,7 @@ release:
 		--depends "procps" \
 		--depends "util-linux" \
     --depends "initscripts" \
+		--depends "$(GHBASE)/monit.rpm" \
 		--force \
 			"$(DIR)/init.sh"="/etc/init.d/giftbox"
 	@test ! -e "./rpm/$(NAME).rpm" || (cp ./rpm/$(NAME).rpm ./rpm/$(NAME).prev.rpm)
